@@ -1,7 +1,8 @@
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import isequal from 'lodash.isequal';
 import _ from 'lodash';
 import {
+  
   doSanityCheck,
   filterBibleList,
   findBookId,
@@ -67,7 +68,8 @@ const useBibleReference = (props) => {
     initialBook,
     initialChapter,
     initialVerse,
-    onChange
+    onChange,
+    showOBS
   } = props || {};
 
   const bibleList_ = getBibleList();
@@ -322,6 +324,14 @@ const useBibleReference = (props) => {
     }
     return null
   }
+  useEffect(() => {
+    if (!showOBS) {
+      setBookList( (prev) => prev.filter((e)=> e.key!=='obs'))
+        // bookList.filter((e)=> e.key!=='obs'))
+    }
+    
+  }, [showOBS])
+  
 
   return {
     state: {
@@ -332,6 +342,7 @@ const useBibleReference = (props) => {
       bookList,
       chapterList,
       verseList,
+      showOBS
     },
     actions: {
       applyBooksFilter,

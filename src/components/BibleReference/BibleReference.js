@@ -51,7 +51,7 @@ export function BibleReference(props) {
     style,
     inputProps,
   } = props;
-
+console.log(bookList);
   const style_ = {...bibleRefDefaultStyle, ...style}; // style property will override default style
   const childrenStyle = removeKeys(style, ['background']); // remove the background for children styles - it will be inherited by children by default, and making it explicit creates havoc
 
