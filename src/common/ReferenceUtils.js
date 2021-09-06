@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {ALL_BIBLE_BOOKS, BOOK_CHAPTER_VERSES} from "./BooksOfTheBible";
+import { ALL_BIBLE_BOOKS, BOOK_CHAPTER_VERSES } from "./BooksOfTheBible";
 
 // consts
 export const USE_FIRST = Number.NEGATIVE_INFINITY;
@@ -51,8 +51,11 @@ export function createBibleListItem(bookID, bookName, dropDownDescription) {
   return item;
 }
 
-export function getBibleList(filter = null) {
-  const bibleBooks = Object.keys(ALL_BIBLE_BOOKS).map( bookID => {
+export function getBibleList(showOBS, filter = null) {
+  if (showOBS === false) {
+    delete ALL_BIBLE_BOOKS.obs
+  }
+  const bibleBooks = Object.keys(ALL_BIBLE_BOOKS).map(bookID => {
     const bookName = ALL_BIBLE_BOOKS[bookID];
     const dropDownDescription = getFullBookDescription(bookID, bookName);
     const item = createBibleListItem(bookID, bookName, dropDownDescription);
@@ -85,8 +88,8 @@ export function getVerseList(bookID, chapter, bookChapters = BOOK_CHAPTER_VERSES
         verses = Number.parseInt(verses);
       }
       if (verses >= 0) {
-        const verseList = Array.from({length: verses}, (x, i) => {
-          const verse = `${i+1}`;
+        const verseList = Array.from({ length: verses }, (x, i) => {
+          const verse = `${i + 1}`;
           return {
             key: verse,
             name: verse,
@@ -217,7 +220,7 @@ function findChapterVerse(ch_vs) {
     v = ((found.length > 3) && found[3]) || '1';
     console.log(`findChapterVerse - found (${c}:${v})`);
   }
-  return {c, v};
+  return { c, v };
 }
 
 /**
@@ -238,7 +241,7 @@ export function getBookChapterVerse(text) {
         const found = bookId.match(/^[\d]?([^\d\W]+)$/i); // make sure book name is just word with no numbers or punctuation (may optionally have a leading digit)
         console.log(`getBookChapterVerse(${text}) book=${bookId}, found=${JSON.stringify(found)}`);
         if (found) {
-          return {bookId, c, v};
+          return { bookId, c, v };
         }
       }
     }

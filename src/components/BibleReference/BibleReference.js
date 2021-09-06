@@ -7,7 +7,7 @@ import NavButtons, {
   NAV_TYPES_NEXT,
   NAV_TYPES_PREV
 } from "../NavButtons/NavButtons";
-import {removeKeys} from "../../common/ReferenceUtils";
+import { removeKeys } from "../../common/ReferenceUtils";
 
 const bibleRefDefaultStyle = {
   fontFamily: 'Noto Sans',
@@ -51,62 +51,62 @@ export function BibleReference(props) {
     style,
     inputProps,
   } = props;
-console.log(bookList);
-  const style_ = {...bibleRefDefaultStyle, ...style}; // style property will override default style
+
+  const style_ = { ...bibleRefDefaultStyle, ...style }; // style property will override default style
   const childrenStyle = removeKeys(style, ['background']); // remove the background for children styles - it will be inherited by children by default, and making it explicit creates havoc
 
   // Render the UI for your table
   return (
-      <div style={style_}>
+    <div style={style_}>
 
-        <NavButtons id="prev_ch" title='Previous chapter' onClick={goToPrevChapter} type={NAV_TYPES_DOUBLE_PREV} style={childrenStyle} />
+      <NavButtons id="prev_ch" title='Previous chapter' onClick={goToPrevChapter} type={NAV_TYPES_DOUBLE_PREV} style={childrenStyle} />
 
-        <NavButtons id="prev_v" title='Previous verse' onClick={goToPrevVerse} type={NAV_TYPES_PREV} style={childrenStyle} />
+      <NavButtons id="prev_v" title='Previous verse' onClick={goToPrevVerse} type={NAV_TYPES_PREV} style={childrenStyle} />
 
-        <ReferenceSelector
-          id="bible"
-          matchName={true}
-          options={bookList}
-          initial={bookId}
-          onChange={onChangeBook}
-          style={childrenStyle}
-          inputProps={inputProps}
-          matcher={text => bibleVerseMatcher(text, 'bookId')}
+      <ReferenceSelector
+        id="bible"
+        matchName={true}
+        options={bookList}
+        initial={bookId}
+        onChange={onChangeBook}
+        style={childrenStyle}
+        inputProps={inputProps}
+        matcher={text => bibleVerseMatcher(text, 'bookId')}
 
-          // with width 'max-content' there is still a little cropping of (1th) & (2th) on Firefox and Safari, but it is
-          // not a show stopper since book names are readable.  Chrome behaves differently by increasing the width to
-          // accommodate the vertical scrollbar, but others do not which causes clipping of right side of longest strings.
-          // Also tried setting popper width to 'fit-content', but still see same results as fit-content.
-          usePopperWidth={'max-content'}
-        />
+        // with width 'max-content' there is still a little cropping of (1th) & (2th) on Firefox and Safari, but it is
+        // not a show stopper since book names are readable.  Chrome behaves differently by increasing the width to
+        // accommodate the vertical scrollbar, but others do not which causes clipping of right side of longest strings.
+        // Also tried setting popper width to 'fit-content', but still see same results as fit-content.
+        usePopperWidth={'max-content'}
+      />
 
-        <ReferenceSelector
-          id="chapter"
-          options={chapterList}
-          initial={chapter}
-          onChange={onChangeChapter}
-          style={childrenStyle}
-          inputProps={inputProps}
-          matcher={text => bibleVerseMatcher(text, 'c')}
-        />
+      <ReferenceSelector
+        id="chapter"
+        options={chapterList}
+        initial={chapter}
+        onChange={onChangeChapter}
+        style={childrenStyle}
+        inputProps={inputProps}
+        matcher={text => bibleVerseMatcher(text, 'c')}
+      />
 
-        <div style={chapterVerseSeparatorStyle}>:</div>
+      <div style={chapterVerseSeparatorStyle}>:</div>
 
-        <ReferenceSelector
-          id="verse"
-          options={verseList}
-          initial={verse}
-          onChange={onChangeVerse}
-          style={childrenStyle}
-          inputProps={inputProps}
-          matcher={text => bibleVerseMatcher(text, 'v')}
-        />
+      <ReferenceSelector
+        id="verse"
+        options={verseList}
+        initial={verse}
+        onChange={onChangeVerse}
+        style={childrenStyle}
+        inputProps={inputProps}
+        matcher={text => bibleVerseMatcher(text, 'v')}
+      />
 
-        <NavButtons id="next_v" title='Next verse' onClick={goToNextVerse} type={NAV_TYPES_NEXT} style={childrenStyle} />
+      <NavButtons id="next_v" title='Next verse' onClick={goToNextVerse} type={NAV_TYPES_NEXT} style={childrenStyle} />
 
-        <NavButtons id="next_ch" title='Next chapter' onClick={goToNextChapter} type={NAV_TYPES_DOUBLE_NEXT} style={childrenStyle} />
+      <NavButtons id="next_ch" title='Next chapter' onClick={goToNextChapter} type={NAV_TYPES_DOUBLE_NEXT} style={childrenStyle} />
 
-      </div>
+    </div>
   )
 }
 

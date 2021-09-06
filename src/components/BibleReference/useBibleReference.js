@@ -71,7 +71,8 @@ const useBibleReference = (props) => {
     onChange,
   } = props || {};
 
-  const bibleList_ = getBibleList();
+  const [showOBS, setShowOBS] = useState(false);
+  const bibleList_ = getBibleList(showOBS);
   const initialBook_ = doSanityCheck(bibleList_, initialBook); // if not in bible list selects first available book
   const initialChapters_ = getChapterList(initialBook_);
   const initialChapter_ = doSanityCheck(initialChapters_, initialChapter);
@@ -87,12 +88,11 @@ const useBibleReference = (props) => {
   const [chapter, setChapter] = useState(initialChapter_);
   const [verseList, setVerseList] = useState(initialVerses_);
   const [verse, setVerse] = useState(initialVerse_);
-  const [showOBS, setShowOBS] = useState(false);
+
 
   const getFilteredBookList = () => {
     return _.cloneDeep(bookList);
   }
-
   const updateBookList = (newBookList, newBookChapterVerses = bookChapterVerses) => {
     if (!isequal(newBookList, bookList)) {
       setBookList(newBookList);
@@ -324,13 +324,13 @@ const useBibleReference = (props) => {
     }
     return null
   }
-  useEffect(() => {
-    if (showOBS === false) {
-      setBookList((prev) => prev.filter((e) => e.key !== 'obs'))
-      // bookList.filter((e)=> e.key!=='obs'))
-    }
+  // useEffect(() => {
+  //   if (showOBS === false) {
+  //     setBookList((prev) => prev.filter((e) => e.key !== 'obs'))
+  //     // bookList.filter((e)=> e.key!=='obs'))
+  //   }
 
-  }, [showOBS])
+  // }, [showOBS])
 
 
   return {
@@ -342,7 +342,7 @@ const useBibleReference = (props) => {
       bookList,
       chapterList,
       verseList,
-      showOBS
+
     },
     actions: {
       applyBooksFilter,
@@ -361,7 +361,8 @@ const useBibleReference = (props) => {
       setNewBookList,
       setBookChapterVerses,
       bibleVerseMatcher,
-      setShowOBS,
+      setShowOBS
+
     }
   };
 };
