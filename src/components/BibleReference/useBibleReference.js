@@ -70,7 +70,7 @@ const useBibleReference = (props) => {
     initialVerse,
     onChange,
     obs
-    
+  
   } = props || {};
 
   
@@ -356,7 +356,6 @@ const useBibleReference = (props) => {
       setBookChapterVerses,
       bibleVerseMatcher,
      
-
     }
   };
 };
