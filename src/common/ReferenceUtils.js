@@ -51,8 +51,8 @@ export function createBibleListItem(bookID, bookName, dropDownDescription) {
   return item;
 }
 
-export function getBibleList(showOBS, filter = null) {
-  if (showOBS === false) {
+export function getBibleList(obs, filter = null) {
+  if (!obs) {
     delete ALL_BIBLE_BOOKS.obs
   }
   const bibleBooks = Object.keys(ALL_BIBLE_BOOKS).map(bookID => {

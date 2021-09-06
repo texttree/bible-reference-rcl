@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import isequal from 'lodash.isequal';
 import _ from 'lodash';
 import {
@@ -69,12 +69,12 @@ const useBibleReference = (props) => {
     initialChapter,
     initialVerse,
     onChange,
-    showOBS=false
+    obs
     
   } = props || {};
 
-  // const [showOBS, setShowOBS] = useState(false);
-  const bibleList_ = getBibleList(showOBS);
+  
+  const bibleList_ = getBibleList(obs);
   const initialBook_ = doSanityCheck(bibleList_, initialBook); // if not in bible list selects first available book
   const initialChapters_ = getChapterList(initialBook_);
   const initialChapter_ = doSanityCheck(initialChapters_, initialChapter);
@@ -326,15 +326,7 @@ const useBibleReference = (props) => {
     }
     return null
   }
-  // useEffect(() => {
-  //   if (showOBS === false) {
-  //     setBookList((prev) => prev.filter((e) => e.key !== 'obs'))
-  //     // bookList.filter((e)=> e.key!=='obs'))
-  //   }
-
-  // }, [showOBS])
-
-
+  
   return {
     state: {
       bookName,
