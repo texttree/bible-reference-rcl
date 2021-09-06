@@ -69,9 +69,11 @@ const useBibleReference = (props) => {
     initialChapter,
     initialVerse,
     onChange,
+    showOBS=false
+    
   } = props || {};
 
-  const [showOBS, setShowOBS] = useState(false);
+  // const [showOBS, setShowOBS] = useState(false);
   const bibleList_ = getBibleList(showOBS);
   const initialBook_ = doSanityCheck(bibleList_, initialBook); // if not in bible list selects first available book
   const initialChapters_ = getChapterList(initialBook_);
@@ -361,7 +363,7 @@ const useBibleReference = (props) => {
       setNewBookList,
       setBookChapterVerses,
       bibleVerseMatcher,
-      setShowOBS
+     
 
     }
   };

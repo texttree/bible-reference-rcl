@@ -33,6 +33,7 @@ const supportedBooks = null; // if empty array or null then all books available
 const initialBook = "mal";
 const initialChapter = "2";
 const initialVerse = "3";
+const showOBS = true
 // select colors
 const blue = "#00B0FF"; // a shade of blue
 const white = "#FFFFFF";
@@ -48,7 +49,8 @@ const initial = {
   initialBook,
   initialChapter,
   initialVerse,
-  onChange
+  onChange,
+  showOBS
 };
 
 const {state, actions} = useBibleReference(initial);
