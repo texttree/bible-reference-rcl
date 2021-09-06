@@ -1,8 +1,8 @@
-import {useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import isequal from 'lodash.isequal';
 import _ from 'lodash';
 import {
-  
+
   doSanityCheck,
   filterBibleList,
   findBookId,
@@ -16,7 +16,7 @@ import {
   USE_FIRST,
   USE_LAST,
 } from "../../common/ReferenceUtils";
-import {BOOK_CHAPTER_VERSES} from "../../common/BooksOfTheBible";
+import { BOOK_CHAPTER_VERSES } from "../../common/BooksOfTheBible";
 
 /**
  * selection option used by ReferenceSelector components
@@ -69,7 +69,6 @@ const useBibleReference = (props) => {
     initialChapter,
     initialVerse,
     onChange,
-    showOBS
   } = props || {};
 
   const bibleList_ = getBibleList();
@@ -88,6 +87,7 @@ const useBibleReference = (props) => {
   const [chapter, setChapter] = useState(initialChapter_);
   const [verseList, setVerseList] = useState(initialVerses_);
   const [verse, setVerse] = useState(initialVerse_);
+  const [showOBS, setShowOBS] = useState(false);
 
   const getFilteredBookList = () => {
     return _.cloneDeep(bookList);
@@ -149,7 +149,7 @@ const useBibleReference = (props) => {
     }
   };
 
-  const goToPrevBook = (event=null, selectVerse=USE_FIRST) => {
+  const goToPrevBook = (event = null, selectVerse = USE_FIRST) => {
     // console.log(`useBibleReference.onPrevBook() ${bookId}`);
     let { key: newBook, overflow } = getPrevItem(bookList, bookId);
 
@@ -160,7 +160,7 @@ const useBibleReference = (props) => {
     }
   };
 
-  const goToNextBook = (event=null, selectVerse=USE_FIRST) => {
+  const goToNextBook = (event = null, selectVerse = USE_FIRST) => {
     // console.log(`useBibleReference.onNextBook() ${bookId}`);
     let { key: newBook, overflow } = getNextItem(bookList, bookId);
 
@@ -174,7 +174,7 @@ const useBibleReference = (props) => {
   const doChangeCallback = (bookID, chapter, verse) => {
     try {
       onChange && onChange(bookID, chapter, verse);
-    } catch(e) {
+    } catch (e) {
       console.error(`useBibleReference.doChangeCallback(${bookID}, ${chapter}, ${verse})\`) - callback failed`, e);
     }
   }
@@ -240,7 +240,7 @@ const useBibleReference = (props) => {
     }
   };
 
-  const goToPrevChapter = (event=null, selectVerse=USE_FIRST) => {
+  const goToPrevChapter = (event = null, selectVerse = USE_FIRST) => {
     // console.log(`useBibleReference.onPrevChapter() ${bookId} ${chapter}`);
     let { key: newChapter, overflow } = getPrevItem(chapterList, chapter);
 
@@ -252,7 +252,7 @@ const useBibleReference = (props) => {
     }
   };
 
-  const goToNextChapter = (event=null, selectVerse=USE_FIRST) => {
+  const goToNextChapter = (event = null, selectVerse = USE_FIRST) => {
     // console.log(`useBibleReference.onNextChapter() ${bookId} ${chapter}`);
     let { key: newChapter, overflow } = getNextItem(chapterList, chapter);
 
@@ -313,25 +313,25 @@ const useBibleReference = (props) => {
     if (text) {
       const results = getBookChapterVerse(text)
       if (results) {
-        let {bookId, c, v} = results
+        let { bookId, c, v } = results
         bookId = findBookId(bookList, bookId)
         if (bookId) {
           // we found a valid reference - go to it
           goToBookChapterVerse(bookId, c, v)
-          return {bookId, c, v, id}
+          return { bookId, c, v, id }
         }
       }
     }
     return null
   }
   useEffect(() => {
-    if (!showOBS) {
-      setBookList( (prev) => prev.filter((e)=> e.key!=='obs'))
-        // bookList.filter((e)=> e.key!=='obs'))
+    if (showOBS === false) {
+      setBookList((prev) => prev.filter((e) => e.key !== 'obs'))
+      // bookList.filter((e)=> e.key!=='obs'))
     }
-    
+
   }, [showOBS])
-  
+
 
   return {
     state: {
@@ -361,6 +361,7 @@ const useBibleReference = (props) => {
       setNewBookList,
       setBookChapterVerses,
       bibleVerseMatcher,
+      setShowOBS,
     }
   };
 };
