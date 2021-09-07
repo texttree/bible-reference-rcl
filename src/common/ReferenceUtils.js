@@ -51,7 +51,7 @@ export function createBibleListItem(bookID, bookName, dropDownDescription) {
   return item;
 }
 
-export function getBibleList( filter = null,addOBS = false) {
+export function getBibleList(addOBS = false, filter = null) {
   if (!addOBS) {
     delete ALL_BIBLE_BOOKS.obs
   }
