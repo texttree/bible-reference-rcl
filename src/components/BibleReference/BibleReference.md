@@ -3,27 +3,27 @@
 ### Demo the component navigating verses, updating state, and using API
 
 ```js
-import React, {useState, useEffect} from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import React, { useState, useEffect } from "react";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import useBibleReference from './useBibleReference';
-import BibleReference from './BibleReference';
+import useBibleReference from "./useBibleReference";
+import BibleReference from "./BibleReference";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   underline: {
-    '&:hover:not(.Mui-disabled):before': {
-      borderBottom: '2px solid white',
+    "&:hover:not(.Mui-disabled):before": {
+      borderBottom: "2px solid white",
     },
-    '&:before': {
-      borderBottom: '1px solid white',
+    "&:before": {
+      borderBottom: "1px solid white",
     },
-    '&:after': {
-      borderBottom: '2px solid white',
+    "&:after": {
+      borderBottom: "2px solid white",
     },
   },
 }));
@@ -48,36 +48,38 @@ const initial = {
   initialBook,
   initialChapter,
   initialVerse,
-  onChange
+  onChange,
 };
 
-const {state, actions} = useBibleReference(initial);
+const { state, actions } = useBibleReference(initial);
 const classes = useStyles();
 
 useEffect(() => {
   actions.applyBooksFilter(supportedBooks);
 }, []); // just apply the first time in this demo
 
-<div style={{ backgroundColor: '#31ADE3' }}>
-  <br/>
-  <br/>
+<div style={{ backgroundColor: "#31ADE3" }}>
+  <br />
+  <br />
 
-  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+  <div
+    style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+  >
     <BibleReference
       status={state}
       actions={actions}
       style={style}
-      inputProps={{classes}}
+      inputProps={{ classes }}
     />
   </div>
 
-  <br/>
-  <br/>
+  <br />
+  <br />
 
   <Card variant="outlined">
     <CardContent>
       <Typography
-        style={{fontWeight: "bold"}}
+        style={{ fontWeight: "bold" }}
         color="textPrimary"
         display="inline"
       >
@@ -86,10 +88,10 @@ useEffect(() => {
       <Typography color="textPrimary" display="inline">
         {`\u00A0component is shown above ^^^`}
       </Typography>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <Typography
-        style={{fontWeight: "bold"}}
+        style={{ fontWeight: "bold" }}
         color="textPrimary"
         display="inline"
       >
@@ -98,10 +100,10 @@ useEffect(() => {
       <Typography color="textPrimary" gutterBottom display="inline">
         {`\u00A0state examples below (dynamically updated as reference changes):`}
       </Typography>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <Typography
-        style={{marginLeft: "50px"}}
+        style={{ marginLeft: "50px" }}
         color="textPrimary"
         gutterBottom
         display="inline"
@@ -109,16 +111,16 @@ useEffect(() => {
         {`Book Name:\u00A0`}
       </Typography>
       <Typography
-        style={{fontWeight: "bold"}}
+        style={{ fontWeight: "bold" }}
         color="textPrimary"
         gutterBottom
         display="inline"
       >
         {`${state.bookName}`}
       </Typography>
-      <br/>
+      <br />
       <Typography
-        style={{marginLeft: "50px"}}
+        style={{ marginLeft: "50px" }}
         color="textPrimary"
         gutterBottom
         display="inline"
@@ -126,7 +128,7 @@ useEffect(() => {
         {`Current Location:\u00A0`}
       </Typography>
       <Typography
-        style={{fontWeight: "bold"}}
+        style={{ fontWeight: "bold" }}
         color="textPrimary"
         gutterBottom
         display="inline"
@@ -140,19 +142,11 @@ useEffect(() => {
         {`action examples that are using API to change the current reference:`}
       </Typography>
 
-      <Button
-        variant="outlined"
-        id="prev_v"
-        onClick={actions.goToPrevVerse}
-      >
+      <Button variant="outlined" id="prev_v" onClick={actions.goToPrevVerse}>
         {"Previous Verse"}
       </Button>
 
-      <Button
-        variant="outlined"
-        id="next_v"
-        onClick={actions.goToNextVerse}
-      >
+      <Button variant="outlined" id="next_v" onClick={actions.goToNextVerse}>
         {"Next Verse"}
       </Button>
 
@@ -165,6 +159,125 @@ useEffect(() => {
       </Button>
     </CardActions>
   </Card>
+</div>;
+```
 
-</div>
+### Demo a component that updates the list of books in different languages
+
+```js
+import React, { useState, useEffect } from "react";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import useBibleReference from "./useBibleReference";
+import BibleReference from "./BibleReference";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles((theme) => ({
+  underline: {
+    "&:hover:not(.Mui-disabled):before": {
+      borderBottom: "2px solid white",
+    },
+    "&:before": {
+      borderBottom: "1px solid white",
+    },
+    "&:after": {
+      borderBottom: "2px solid white",
+    },
+  },
+}));
+
+const supportedBooks = ["gen", "exo", "lev", "num"];
+
+const translatedBooks = [
+  { key: "gen", name: "Бытие", label: "Бытие" },
+  { key: "exo", name: "Исход", label: "Исход" },
+  { key: "lev", name: "Левит ", label: "Левит" },
+  { key: "num", name: "Числа", label: "Числа" },
+];
+
+const initialBook = "mal";
+const initialChapter = "2";
+const initialVerse = "3";
+// select colors
+const blue = "#00B0FF"; // a shade of blue
+const white = "#FFFFFF";
+const black = "#000000";
+const style = { color: white }; // use defaults
+// const style = { color: white, background: blue }; // set forground and background colors
+
+function onChange(bookId, chapter, verse) {
+  console.log(`\n### Reference changed to ${bookId} - ${chapter}:${verse}\n\n`);
+}
+
+const initial = {
+  initialBook,
+  initialChapter,
+  initialVerse,
+  onChange,
+};
+
+const { state, actions } = useBibleReference(initial);
+const classes = useStyles();
+
+useEffect(() => {
+  actions.applyBooksFilter(supportedBooks);
+}, []); // just apply the first time in this demo
+
+const handleClick = () => {
+  actions.setNewBookList(translatedBooks);
+};
+
+const renderBooks = state.bookList.map((el) => (
+  <div
+    style={{
+      margin: "auto",
+    }}
+    key={el.key}
+  >
+    {el.name}
+  </div>
+));
+
+<div style={{ backgroundColor: "#31ADE3" }}>
+  <br />
+  <br />
+
+  <div
+    style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+  >
+    <BibleReference
+      status={state}
+      actions={actions}
+      style={style}
+      inputProps={{ classes }}
+    />
+  </div>
+
+  <br />
+  <br />
+
+  <Card variant="outlined">
+    <CardContent>
+      <Typography
+        style={{ fontWeight: "bold" }}
+        color="textPrimary"
+        display="inline"
+      >
+        <div style={{ display: "flex", flexFlow: "row wrap" }}>
+          {renderBooks}
+        </div>
+      </Typography>
+    </CardContent>
+
+    <CardActions>
+      <Button variant="outlined" id="next_b" onClick={handleClick}>
+        {"Russian"}
+      </Button>
+    </CardActions>
+  </Card>
+</div>;
 ```
