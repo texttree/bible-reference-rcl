@@ -69,12 +69,11 @@ const useBibleReference = (props) => {
     initialChapter,
     initialVerse,
     onChange,
-    obs
-  
+    addOBS  
   } = props || {};
 
   
-  const bibleList_ = getBibleList(obs);
+  const bibleList_ = getBibleList(addOBS);
   const initialBook_ = doSanityCheck(bibleList_, initialBook); // if not in bible list selects first available book
   const initialChapters_ = getChapterList(initialBook_);
   const initialChapter_ = doSanityCheck(initialChapters_, initialChapter);

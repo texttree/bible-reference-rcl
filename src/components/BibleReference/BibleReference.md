@@ -33,7 +33,7 @@ const supportedBooks = null; // if empty array or null then all books available
 const initialBook = "mal";
 const initialChapter = "2";
 const initialVerse = "3";
-const obs = true; // when OBS is true - in bibleList we get OBS
+const addOBS = true; // when is true - in bibleList we add OBS
 // select colors
 const blue = "#00B0FF"; // a shade of blue
 const white = "#FFFFFF";
@@ -50,7 +50,7 @@ const initial = {
   initialChapter,
   initialVerse,
   onChange,
-  obs,
+  addOBS,
 };
 
 const { state, actions } = useBibleReference(initial);
