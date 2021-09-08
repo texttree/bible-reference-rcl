@@ -127,14 +127,20 @@ const useBibleReference = (props) => {
       console.log(`useBibleReference.setNewBookList()`);
       const newBookList_ = _.cloneDeep(newBookList);
       setFullBookList(newBookList_);
+      
       if (saveFilter) {
-        applyBooksFilter(bookList.map((el) => el.key));
+        const newBookList =  filterBibleList(newBookList_, bookList.map((el) => el.key))
+        if (newBookList?.length) { // sanity check, only apply filter if list is not empty
+          updateBookList(newBookList);
+        }
+       
       } else {
         updateBookList(newBookList_);
       }
     }
   };
 
+  
   /**
    * takes the full bible book list and trims it down to an array that matches bookIDs in filter
    * @param filter - array of bookIDs to filter - this is a list of bookIDs to keep
