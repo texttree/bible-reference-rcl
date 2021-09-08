@@ -130,7 +130,7 @@ const useBibleReference = (props) => {
       
       if (saveFilter) {
         const newBookList =  filterBibleList(newBookList_, bookList.map((el) => el.key))
-        if (newBookList?.length) { // sanity check, only apply filter if list is not empty
+        if (newBookList?.length) { 
           updateBookList(newBookList);
         }
        
