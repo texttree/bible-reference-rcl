@@ -190,16 +190,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const supportedBooks = ["gen", "exo", "lev", "num"];
+const supportedBooks = ["gen", "exo", "lev"];
 
-const translatedBooks = [
+const translatedBooksRu = [
   { key: "gen", name: "Бытие", label: "Бытие" },
   { key: "exo", name: "Исход", label: "Исход" },
-  { key: "lev", name: "Левит ", label: "Левит" },
+  { key: "lev", name: "Левит", label: "Левит" },
   { key: "num", name: "Числа", label: "Числа" },
+  { key: "deu", name: "Второзаконие", label: "Второзаконие" },
 ];
 
-const initialBook = "mal";
+const translatedBooksEn = [
+  { key: "gen", name: "Genesis", label: "Genesis" },
+  { key: "exo", name: "Exodus", label: "Exodus" },
+  { key: "lev", name: "Leviticus", label: "Leviticus" },
+  { key: "num", name: "Numbers", label: "Numbers" },
+  { key: "deu", name: "Deuteronomy", label: "Deuteronomy" },
+];
+
+const initialBook = "exo";
 const initialChapter = "2";
 const initialVerse = "3";
 // select colors
@@ -223,24 +232,33 @@ const initial = {
 const { state, actions } = useBibleReference(initial);
 const classes = useStyles();
 
+const [renderBooks, setRenderBooks] = useState('');
+
 useEffect(() => {
   actions.applyBooksFilter(supportedBooks);
 }, []); // just apply the first time in this demo
 
-const handleClick = () => {
-  actions.setNewBookList(translatedBooks);
+const handleClickRu = () => {
+  actions.setNewBookList(translatedBooksRu, true);
 };
 
-const renderBooks = state.bookList.map((el) => (
-  <div
-    style={{
-      margin: "auto",
-    }}
-    key={el.key}
-  >
-    {el.name}
-  </div>
-));
+const handleClickEn = () => {
+  actions.setNewBookList(translatedBooksEn, true);
+};
+
+useEffect(() => {
+  console.log(state.bookList);
+  setRenderBooks(state.bookList.map((el) => (
+    <div
+      style={{
+        margin: "auto",
+      }}
+      key={el.key}
+    >
+      {el.name}
+    </div>
+  )));
+}, [state.bookList]);
 
 <div style={{ backgroundColor: "#31ADE3" }}>
   <br />
@@ -274,8 +292,11 @@ const renderBooks = state.bookList.map((el) => (
     </CardContent>
 
     <CardActions>
-      <Button variant="outlined" id="next_b" onClick={handleClick}>
+      <Button variant="outlined" id="next_b" onClick={handleClickRu}>
         {"Russian"}
+      </Button>
+      <Button variant="outlined" id="next_c" onClick={handleClickEn}>
+        {"English"}
       </Button>
     </CardActions>
   </Card>
